@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>	</title>
+	<style>	
+*{margin:0px; padding:0px;}
+body,html{width:100%; height:100%;}
+.wrap{width:100%; height:100%; position:relative;}
+.main{width:100%; height:100%;}
+.header{width:100%; height:80px; background:#fff; position:fixed; top:0; left:0;}
+.gnb{width:100%; height:80px;}
+.gnb li{float:left; padding:0 10px; list-style:none;}
+.gnb a{font-size:20px; line-height: 100px; color:#333;}
+.gnb a.active { color:cyan; }
+.page{width:100%; height:100%;}
+#pg1{background:red;}
+#pg2{background:blue;}
+#pg3{background:green;}
+#pg4{background:yellow;}
+
+
+	</style>
+</head>
+<body>
+	<div class="wrap">	
+		<header class="header">	
+			<ul class="gnb">
+				<li><a href="#pg1">메뉴1</a></li>
+				<li><a href="#pg2">메뉴2</a></li>
+				<li><a href="#pg3">메뉴3</a></li>
+				<li><a href="#pg4">메뉴4</a></li>
+			</ul>
+		</header>
+		<div class="main">
+			<div class="page" id="pg1"></div>
+			<div class="page" id="pg2"></div>
+			<div class="page" id="pg3"></div>
+			<div class="page" id="pg4"></div>
+		</div>
+	</div>
+</body>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	$('.gnb li a').on('click', function(){
+		// 이동한 내부 링크의 위치값(hash)
+		var target = $(this.hash);
+		$('html, body').animate({
+			scrollTop: target.offset().top
+		});
+		return false;
+	});
+
+	$(document).on('ready', function() {
+		hirightMenu()
+	});
+
+	$(window).on('scroll', function() {
+		hirightMenu()
+	});
+
+
+	function hirightMenu() {
+		$('.page').each(function(index) {
+			console.log($(this).offset().top, $(window).scrollTop())
+			if ( $(this).offset().top < $(window).scrollTop() + 50 ) {
+				$('.gnb a').removeClass('active');
+				$('.gnb li a[href="' + '#pg' + (index + 1) +'"]').addClass('active');
+			}
+		});
+	}
+</script>
+</html>
